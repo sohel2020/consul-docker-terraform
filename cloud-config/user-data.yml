@@ -1,0 +1,7 @@
+#cloud-config
+
+runcmd:
+  # Install docker
+  - curl -sSL https://get.docker.com | sudo sh
+  # Run Consul server 
+  - docker run -d --name consul-server -p 8300:8300 -p 8301:8301 -p 8301:8301/udp -p 8302:8302 -p 8302:8302/udp -p 8400:8400 -p 8500:8500 -p 172.17.0.1:53:53/udp gliderlabs/consul-server -server -bootstrap -advertise $(curl -s http://169.254.169.254/latest/meta-data/public-ipv4)
